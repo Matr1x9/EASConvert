@@ -413,7 +413,8 @@ bool Convert::convertPlData(QString &errorText, QString filename, std::vector<QS
         // вершина треугольника. Координаты и все значения нуклидов
 
         std::vector<double> list1;
-        for (int j = 0; j < columnsCount; j++)
+
+        for (int j = 0; j < columnsCount * 3; j++)
         {
             double val;
             in >> val;
@@ -421,8 +422,17 @@ bool Convert::convertPlData(QString &errorText, QString filename, std::vector<QS
         }
 
         for (int j = 0; j < columnsCount; j++)
+        {
             inres.push_back(QString::number(list1[j],'E', 5));
+        }
 
+
+        if (results.size() > 0)
+        {
+            auto test = results[results.size() - 1];
+            if (test == inres)
+                continue;
+        }
         results.push_back(inres);
     }
 
@@ -475,7 +485,7 @@ bool Convert::writeAllResults(QString &errorText, QString &pathToFile, const std
     }
 
     QTextStream out(&file);
-    out.setCodec("UTF-8");
+    out.setEncoding(QStringConverter::Utf8);
     for (const auto &str : results)
     {
         QString tempString;

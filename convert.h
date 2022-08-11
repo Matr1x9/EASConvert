@@ -23,6 +23,12 @@ public:
     void setWriteHeader(bool val);
     QString getTitle();
 private:
+    struct Triangle
+    {
+        double x;
+        double y;
+        double z;
+    };
     QString inputFolder;
     QString outputFolder;
     QString title;
